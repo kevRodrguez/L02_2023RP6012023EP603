@@ -62,8 +62,4 @@ export class LibroController {
         }
     }
 
-    // Método adicional para mantener compatibilidad
-    public obtenerLibros = async (req: Request, res: Response, next: NextFunction) => {
-        return this.getAllLibros(req, res, next);
-    }
 }

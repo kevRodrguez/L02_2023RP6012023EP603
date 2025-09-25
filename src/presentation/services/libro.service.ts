@@ -82,8 +82,4 @@ export class LibroService {
         }
     }
 
-    // Método adicional para obtener todos los libros manteniendo compatibilidad
-    public async obtenerLibros(): Promise<LibroResponse[]> {
-        return this.getAllLibros();
-    }
 }

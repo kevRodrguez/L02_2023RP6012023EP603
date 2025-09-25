@@ -36,20 +36,17 @@ export const validateCategoriaExistsForLibro = async (req: Request, res: Respons
             return next();
         }
 
-        // Intentar obtener la categoría por ID usando una consulta directa
-        // ya que el servicio actual no tiene un método getCategoriaById
-        const { pool } = require("../db");
-        const result = await pool.query('SELECT * FROM categorias WHERE id_categoria = $1', [categoria_id]);
-
-        if (result.rows.length === 0) {
+        // Intentar obtener la categoría por ID usando el servicio
+        await categoriaService.getCategoriaById(categoria_id);
+        next();
+    } catch (error) {
+        if (error instanceof Error && error.message.includes('not found')) {
             return res.status(404).json({
                 status: "Error",
-                message: `Categoría con ID ${categoria_id} no encontrada`
+                message: `Categoría con ID ${req.body.categoria_id} no encontrada`
             });
         }
 
-        next();
-    } catch (error) {
         return next(error);
     }
 };

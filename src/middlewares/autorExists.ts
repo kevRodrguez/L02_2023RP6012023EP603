@@ -11,7 +11,7 @@ export const validateAutorExists = async (req: Request, res: Response, next: Nex
         await autorService.getAutorById(id);
         next();
     } catch (error) {
-        if (error instanceof Error && error.message.includes('not found')) {
+        if (error instanceof Error && error.message.includes('no encontrado')) {
             return res.status(404).json({
                 status: "Error",
                 message: `Autor con ID ${req.params.id} no encontrado`
