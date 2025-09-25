@@ -28,8 +28,19 @@ export class CategoriaController {
         const { id_categoria } = req.params;
         const { nombre_categoria, clasificacion } = req.body;
         try {
-            const categoriaActualizada = await categoriaService.postCategoria(nombre_categoria, clasificacion);
+            const categoriaActualizada = await categoriaService.putCategoria(id_categoria, nombre_categoria, clasificacion);
             res.status(200).json(categoriaActualizada);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
+    public async deleteCategoria(req: Request, res: Response, next: any) {
+        const { id_categoria } = req.params;
+
+        try {
+            const categoriaEliminada = await categoriaService.deleteCategoría(id_categoria);
+            res.status(200).json(categoriaEliminada);
 
         } catch (error) {
             return next(error);

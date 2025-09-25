@@ -34,3 +34,7 @@ export const updateCategoriaValidators: ValidationChain[] = [
     body('nombre_categoria').trim().notEmpty().withMessage('El nombre de la categoria es obligatorio'),
     body('clasificacion').trim().notEmpty().withMessage('La clasificacion de la categoria es obligatoria')
 ]
+
+export const deleteCategoriaValidators: ValidationChain[] = [
+    param('id_categoria').trim().isUUID().notEmpty().withMessage("el id de la categoria es obligatorio")
+];
