@@ -1,3 +1,4 @@
+import { query } from "express";
 import { body, param, ValidationChain } from "express-validator";
 
 // Validaciones para libros
@@ -86,3 +87,23 @@ export const getLibroByIdValidators: ValidationChain[] = [
         .isUUID()
         .withMessage('El ID debe ser un UUID válido')
 ];
+
+export const getLibroByAnioPublicacionValidators: ValidationChain[] = [
+    param('anio')
+        .trim()
+        .isInt()
+        .withMessage('El año de publicación debe ser un año valido')
+        .notEmpty()
+        .withMessage('El año de publicación es obligatorio').isISO8601().withMessage('El año de publicación debe tener un formato válido (YYYY-MM-DD)')
+
+];
+
+export const getLibroByCategoriaValidators: ValidationChain[] = [
+    param('categoria_id')
+        .trim()
+        .notEmpty()
+        .withMessage('El ID de la categoría es obligatorio')
+        .isUUID()
+        .withMessage('El ID de la categoría debe ser un UUID válido')
+];
+

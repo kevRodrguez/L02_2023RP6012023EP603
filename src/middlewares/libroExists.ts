@@ -11,7 +11,7 @@ export const validateLibroExists = async (req: Request, res: Response, next: Nex
         await libroService.getLibroById(id);
         next();
     } catch (error) {
-        if (error instanceof Error && error.message.includes('not found')) {
+        if (error instanceof Error && error.message.includes('no encontrado')) {
             return res.status(404).json({
                 status: "Error",
                 message: `Libro con ID ${req.params.id} no encontrado`

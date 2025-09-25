@@ -82,4 +82,13 @@ export class LibroService {
         }
     }
 
+    public async getLibroByAnioPublicacion(anio: string) {
+        const result = await pool.query('SELECT * FROM libros WHERE anio_publicacion=$1', [anio]);
+        return result.rows;
+    }
+    public async getLibroByCategoria(categoria_id: string) {
+        const result = await pool.query('SELECT * FROM libros WHERE categoria_id=$1', [categoria_id]);
+        return result.rows;
+    }
+
 }

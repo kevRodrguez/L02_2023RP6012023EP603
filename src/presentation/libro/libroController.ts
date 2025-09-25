@@ -62,4 +62,37 @@ export class LibroController {
         }
     }
 
+    public getLibrosByAnioPublicacion = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { anio } = req.params;
+            const libros = await libroService.getLibroByAnioPublicacion(anio);
+            if (libros.length === 0) {
+                res.status(404).json({
+                    message: 'No se encontraron libros para el año proporcionado'
+                })
+                return;
+
+            }
+            res.status(200).json(libros);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public getLibrosByCategoriaId = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { categoria_id } = req.params;
+            const libros = await libroService.getLibroByCategoria(categoria_id);
+            if (libros.length === 0) {
+                res.status(404).json({
+                    message: 'No se encontraron libros para la categoría proporcionada'
+                })
+                return;
+            }
+            res.status(200).json(libros);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
 }
