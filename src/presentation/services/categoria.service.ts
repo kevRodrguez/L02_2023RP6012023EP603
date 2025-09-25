@@ -9,6 +9,23 @@ export class CategoriaService {
         return result.rows;
     }
 
+
+    public async getCategoriaById(id_categoria: string) {
+        try {
+
+            const result = await pool.query('SELECT * FROM categorias WHERE id_categoria=$1', [id_categoria]);
+
+            return result.rows;
+        } catch (error) {
+            console.error('Error al obtener categoría por id:', error);
+            if (error instanceof Error) {
+                throw error;
+            }
+            throw new Error('Error al obtener categoría');
+
+        }
+    }
+
     public async postCategoria(nombre_categoria: string, clasificacion: string) {
         const query = "INSERT INTO categorias (nombre_categoria, clasificacion) VALUES ($1,$2) RETURNING *";
         const categoriaCreada = await pool.query(query, [nombre_categoria, clasificacion]);
@@ -17,7 +34,7 @@ export class CategoriaService {
 
     public async putCategoria(id_categoria: string, nombre_categoria: string, clasificacion: string) {
         const categoriaExistente = await pool.query('SELECT * FROM categorias WHERE id_categoria=$1', [id_categoria]);
-        this.categoriaExiste(id_categoria);
+        // this.categoriaExiste(id_categoria);
         const query = "UPDATE categorias SET nombre_categoria=$1, clasificacion=$2 WHERE id_categoria=$3 RETURNING *";
         const categoriaActualizada = await pool.query(query, [nombre_categoria, clasificacion, id_categoria]);
         return categoriaActualizada.rows[0];
@@ -29,10 +46,5 @@ export class CategoriaService {
         return categoriaEliminada.rows[0];
     }
 
-    private async categoriaExiste(id_categoria: string) {
-        const categoriaExistente = await pool.query('SELECT * FROM categorias WHERE id_categoria=$1', [id_categoria]);
-        if (categoriaExistente.rowCount === 0) {
-            throw new Error('La categoria no existe');
-        }
-    }
+
 }
