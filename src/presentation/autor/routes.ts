@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AutorController } from "./autorController";
 import { createAutorValidators, deleteAutorValidators, getAutorByIdValidators, updateAutorValidators } from "../../middlewares/autor.validator";
 import { runValidations } from "../../middlewares/validator";
+import { validateAutorExists } from "../../middlewares/autorExists";
 
 
 export class AutorRoutes {
@@ -10,10 +11,10 @@ export class AutorRoutes {
         const autorController = new AutorController();
 
         router.get('/', autorController.getAllAutores);
-        router.get('/:id', runValidations(getAutorByIdValidators), autorController.getAutorById);
+        router.get('/:id', runValidations(getAutorByIdValidators), validateAutorExists, autorController.getAutorById);
         router.post('/', runValidations(createAutorValidators), autorController.postAutor);
-        router.put('/:id', runValidations(updateAutorValidators), autorController.putAutor);
-        router.delete('/:id', runValidations(deleteAutorValidators), autorController.deleteAutor);
+        router.put('/:id', runValidations(updateAutorValidators), validateAutorExists, autorController.putAutor);
+        router.delete('/:id', runValidations(deleteAutorValidators), validateAutorExists, autorController.deleteAutor);
 
         return router;
     }
