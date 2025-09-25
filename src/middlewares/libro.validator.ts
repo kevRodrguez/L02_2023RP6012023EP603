@@ -1,4 +1,3 @@
-import { query } from "express";
 import { body, param, ValidationChain } from "express-validator";
 
 // Validaciones para libros
@@ -91,11 +90,10 @@ export const getLibroByIdValidators: ValidationChain[] = [
 export const getLibroByAnioPublicacionValidators: ValidationChain[] = [
     param('anio')
         .trim()
-        .isInt()
-        .withMessage('El año de publicación debe ser un año valido')
         .notEmpty()
-        .withMessage('El año de publicación es obligatorio').isISO8601().withMessage('El año de publicación debe tener un formato válido (YYYY-MM-DD)')
-
+        .withMessage('El año de publicación es obligatorio')
+        .isInt()
+        .withMessage('El año de publicación debe ser un número entero válido mayor a 1900')
 ];
 
 export const getLibroByCategoriaValidators: ValidationChain[] = [
@@ -105,5 +103,20 @@ export const getLibroByCategoriaValidators: ValidationChain[] = [
         .withMessage('El ID de la categoría es obligatorio')
         .isUUID()
         .withMessage('El ID de la categoría debe ser un UUID válido')
+];
+
+export const getLibroByAutorValidators: ValidationChain[] = [
+    param('autor_id')
+        .trim()
+        .notEmpty()
+        .withMessage('El ID del autor es obligatorio')
+        .isUUID()
+        .withMessage('El ID del autor debe ser un UUID válido')
+];
+
+export const getLibroByClasificacionValidators: ValidationChain[] = [
+    body('clasificacion')
+        .notEmpty()
+        .withMessage('La clasificación es obligatoria')
 ];
 

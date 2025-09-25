@@ -91,4 +91,28 @@ export class LibroService {
         return result.rows;
     }
 
+    public async getLibroByAutor(autor_id: string): Promise<LibroResponse[]> {
+        try {
+            const result = await pool.query('SELECT * FROM libros WHERE autor_id = $1', [autor_id]);
+            return result.rows;
+        } catch (error) {
+            console.error('Error getting libros by autor:', error);
+            throw new Error('Error al obtener libros por autor');
+        }
+    }
+
+    public async getLibroByClasificacion(clasificacion: string): Promise<LibroResponse[]> {
+        try {
+            const result = await pool.query(`
+                SELECT l.* FROM libros l
+                INNER JOIN categorias c ON l.categoria_id = c.id_categoria
+                WHERE c.clasificacion = $1
+            `, [clasificacion]);
+            return result.rows;
+        } catch (error) {
+            console.error('Error getting libros by clasificacion:', error);
+            throw new Error('Error al obtener libros por clasificación');
+        }
+    }
+
 }
