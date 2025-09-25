@@ -17,7 +17,7 @@ export class LibroRoutes {
         router.get('/by-anio-publicacion/:anio', runValidations(getLibroByAnioPublicacionValidators), libroController.getLibrosByAnioPublicacion);
         router.get('/by-categoria/:categoria_id', runValidations(getLibroByCategoriaValidators), libroController.getLibrosByCategoriaId);
         router.get('/by-autor/:autor_id', runValidations(getLibroByAutorValidators), validateAutorExistsForSearch, libroController.getLibrosByAutorId);
-        router.post('/by-clasificacion', runValidations(getLibroByClasificacionValidators), libroController.getLibrosByClasificacion);
+        router.get('/by-clasificacion', runValidations(getLibroByClasificacionValidators), libroController.getLibrosByClasificacion);
 
         // CRUD básico (rutas genéricas van AL FINAL)
         router.get('/:id', runValidations(getLibroByIdValidators), validateLibroExists, libroController.getLibroById);
