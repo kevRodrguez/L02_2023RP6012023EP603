@@ -6,7 +6,7 @@ export class CategoriaRoutes {
         const router = Router();
         const categoriaController = new CategoriaController();
 
-        router.get('/', categoriaController.obtenerCategorias);
+        router.get('/', categoriaController.getAllCategorias);
 
         return router;
     }
