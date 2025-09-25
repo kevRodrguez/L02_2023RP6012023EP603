@@ -13,4 +13,26 @@ export class CategoriaController {
             return next(error);
         }
     }
+    public async postCategoria(req: Request, res: Response, next: any) {
+        const { nombre_categoria, clasificacion } = req.body;
+        try {
+            const categoriaCreada = await categoriaService.postCategoria(nombre_categoria, clasificacion);
+            res.status(201).json(categoriaCreada);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public async putCategoria(req: Request, res: Response, next: any) {
+        const { id_categoria } = req.params;
+        const { nombre_categoria, clasificacion } = req.body;
+        try {
+            const categoriaActualizada = await categoriaService.postCategoria(nombre_categoria, clasificacion);
+            res.status(200).json(categoriaActualizada);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
 }

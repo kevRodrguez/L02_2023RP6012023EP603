@@ -9,17 +9,17 @@ export class CategoriaService {
         return result.rows;
     }
 
-    public async postCategoria(nombre_categoria: string, descripcion_categoria: string) {
-        const query = "INSERT INTO categorias (nombre_categoria,descripcion_categoria) VALUES ($1,$2) RETURNING *";
-        const categoriaCreada = await pool.query(query, [nombre_categoria, descripcion_categoria]);
+    public async postCategoria(nombre_categoria: string, clasificacion: string) {
+        const query = "INSERT INTO categorias (nombre_categoria, clasificacion) VALUES ($1,$2) RETURNING *";
+        const categoriaCreada = await pool.query(query, [nombre_categoria, clasificacion]);
         return categoriaCreada.rows[0];
     }
 
-    public async putCategoria(id_categoria: number, nombre_categoria: string, descripcion_categoria: string) {
+    public async putCategoria(id_categoria: number, nombre_categoria: string, clasificacion: string) {
         const categoriaExistente = await pool.query('SELECT * FROM categorias WHERE id_categoria=$1', [id_categoria]);
         this.categoriaExiste(id_categoria);
-        const query = "UPDATE categorias SET nombre_categoria=$1, descripcion_categoria=$2 WHERE id_categoria=$3 RETURNING *";
-        const categoriaActualizada = await pool.query(query, [nombre_categoria, descripcion_categoria, id_categoria]);
+        const query = "UPDATE categorias SET nombre_categoria=$1, clasificacion=$2 WHERE id_categoria=$3 RETURNING *";
+        const categoriaActualizada = await pool.query(query, [nombre_categoria, clasificacion, id_categoria]);
         return categoriaActualizada.rows[0];
     }
 

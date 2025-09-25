@@ -25,21 +25,12 @@ export const createUserValidators: ValidationChain[] = [
     body('contrasenia').isLength({ min: 8 }).withMessage('La contraseña es invalida!!')
 ];
 
-export const updateUserValidators: ValidationChain[] = [
-    param('id_usuario').trim().notEmpty().withMessage("el id del usuario es obligatorio"),
-    body('nombre').trim().notEmpty().withMessage('El nombre es obligatorios'),
-    body('email').trim().notEmpty().isEmail().withMessage('El email no es valido'),
-    body('contrasenia').isLength({ min: 8 }).withMessage('La contraseña es invalida!!')
-];
-
-export const deleteUsersValidators: ValidationChain[] = [
-    param('id_usuario').trim().notEmpty().isULID().withMessage("el id del usuario es obligatorio"),
-];
-
-export const buscarUsuarioPorEmailValidators: ValidationChain[] = [
-    param('email').trim().notEmpty().isEmail().withMessage('El email no es valido'),
-];
-
-export const buscarUsuarioPorNombreValidators: ValidationChain[] = [
-    param('nombre').trim().notEmpty().isULID().withMessage('El nombre es obligatorios'),
-];
+export const createCategoriaValidators: ValidationChain[] = [
+    body('nombre_categoria').trim().notEmpty().withMessage('El nombre de la categoria es obligatorio'),
+    body('clasificacion').trim().notEmpty().withMessage('La clasificacion de la categoria es obligatoria')
+]
+export const updateCategoriaValidators: ValidationChain[] = [
+    param('id_categoria').trim().isUUID().notEmpty().withMessage("el id de la categoria es obligatorio"),
+    body('nombre_categoria').trim().notEmpty().withMessage('El nombre de la categoria es obligatorio'),
+    body('clasificacion').trim().notEmpty().withMessage('La clasificacion de la categoria es obligatoria')
+]
