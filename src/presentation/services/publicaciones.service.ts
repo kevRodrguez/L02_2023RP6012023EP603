@@ -10,7 +10,7 @@ export class PublicacionesService {
     }
 
     public async getPublicacionById(id_publicacion: string) {
-        const result = await pool.query('SELECT * FROM publicaciones WHERE id_publicacion = $1', [id_publicacion]);
+        const result = await pool.query('SELECT * FROM publicaciones WHERE publicacionId = $1', [id_publicacion]);
 
         if (result.rowCount === 0) {
             throw new Error(`Publicacion with id ${id_publicacion} no encontrada`);
@@ -18,10 +18,10 @@ export class PublicacionesService {
 
         return result.rows[0];
     }
-    
-    public async postPublicacion(titulo: string, contenido: string) {
-        const query = "INSERT INTO publicaciones (titulo, contenido) VALUES ($1,$2) RETURNING *";
-        const publicacionCreada = await pool.query(query, [titulo, contenido]);
+
+    public async postPublicacion(titulo: string, descripcion: string, id_usuario: number) {
+        const query = "INSERT INTO publicaciones (titulo, descripcion, usuarioId) VALUES ($1, $2, $3) RETURNING *";
+        const publicacionCreada = await pool.query(query, [titulo, descripcion, id_usuario]);
         return publicacionCreada.rows[0];
     }
 

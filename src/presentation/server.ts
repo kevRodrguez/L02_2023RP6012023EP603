@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import path from 'path';
+import { errorHandler } from '../middlewares/errorsHandler';
 
 interface Options {
   port: number;
@@ -35,6 +36,9 @@ export class Server {
 
     //* Routes
     this.app.use(this.routes);
+
+
+    this.app.use(errorHandler);
 
 
     this.serverListener = this.app.listen(this.port, () => {

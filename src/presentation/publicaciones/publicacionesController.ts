@@ -23,9 +23,9 @@ export class PublicacionesController {
         }
     }
     public async postPublicacion(req: Request, res: Response, next: any) {
-        const { titulo, contenido } = req.body;
+        const { titulo, descripcion, id_usuario } = req.body;
         try {
-            const publicacionCreada = await publicacionesService.postPublicacion(titulo, contenido);
+            const publicacionCreada = await publicacionesService.postPublicacion(titulo, descripcion, Number(id_usuario));
             res.status(201).json(publicacionCreada);
 
         } catch (error) {
