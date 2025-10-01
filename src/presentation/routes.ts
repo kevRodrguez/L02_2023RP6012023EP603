@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { LibroRoutes } from './libro/routes';
-import { CategoriaRoutes } from './categoria/routes';
-import { AutorRoutes } from './autor/routes';
+import { ComentariosRoutes,} from './comentarios/routes';
+import {publicacionesRoutes } from './publicaciones/routes';
+import { UsuarioRoutes } from './usuario/routes';
 
 export class AppRoutes {
 
@@ -10,9 +10,9 @@ export class AppRoutes {
     const router = Router();
 
     // Definir las rutas
-    router.use('/api/libros', LibroRoutes.routes);
-    router.use('/api/categorias', CategoriaRoutes.routes);
-    router.use('/api/autores', AutorRoutes.routes);
+    router.use('/api/usuario', UsuarioRoutes.routes);
+    router.use('/api/publicaciones', publicacionesRoutes.routes);
+    router.use('/api/comentarios', ComentariosRoutes.routes);
 
     return router;
   }
