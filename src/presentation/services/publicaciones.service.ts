@@ -1,4 +1,5 @@
 import { pool } from "../../db";
+import { CustomError } from "../../interfaces/CustomError";
 
 export class PublicacionesService {
     public async getAllPublicaciones() {
@@ -13,7 +14,7 @@ export class PublicacionesService {
         const result = await pool.query('SELECT * FROM publicaciones WHERE publicacionId = $1', [id_publicacion]);
 
         if (result.rowCount === 0) {
-            throw new Error(`Publicacion with id ${id_publicacion} no encontrada`);
+            throw new CustomError(`Publicacion con id ${id_publicacion} no encontrada`, 404);
         }
 
         return result.rows[0];
