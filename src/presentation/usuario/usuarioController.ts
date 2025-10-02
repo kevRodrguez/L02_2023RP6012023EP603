@@ -8,12 +8,12 @@ export class UsuarioController {
 
     public getAllUsuarios = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const autoresData = await usuarioService.getAllUsuarios();
-            console.log(autoresData);
+            const usuariosData = await usuarioService.getAllUsuarios();
+            console.log(usuariosData);
 
-            res.status(200).json(autoresData);
+            res.status(200).json(usuariosData);
         } catch (error) {
-            // res.status(500).json({ error: 'Error al obtener autores' });
+            // res.status(500).json({ error: 'Error al obtener usuarios' });
             return next(error);
         }
     }
