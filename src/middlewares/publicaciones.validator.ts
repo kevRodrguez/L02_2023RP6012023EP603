@@ -24,4 +24,19 @@ export const postPublicacionValidators: ValidationChain[] = [
     body('id_usuario')
         .isNumeric()
         .withMessage('El ID de usuario debe ser un número válido')
-]
+];
+
+export const putPublicacionValidators: ValidationChain[] = [
+    body('id_publicacion')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido'),
+    body('titulo')
+        .trim()
+        .notEmpty().withMessage('El título es obligatorio'),
+    body('descripcion')
+        .trim()
+        .notEmpty().withMessage('La descripción es obligatoria'),
+    body('id_usuario')
+        .isNumeric()
+        .withMessage('El ID de usuario debe ser un número válido')
+];

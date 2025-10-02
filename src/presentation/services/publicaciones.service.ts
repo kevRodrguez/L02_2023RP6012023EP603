@@ -34,7 +34,7 @@ export class PublicacionesService {
     }
 
     public async deletePublicacion(id_publicacion: string) {
-        const query = "DELETE FROM publicaciones WHERE id_publicacion=$1 RETURNING *";
+        const query = "DELETE FROM publicaciones WHERE publicacionId=$1 RETURNING *";
         const publicacionEliminada = await pool.query(query, [id_publicacion]);
         return publicacionEliminada.rows[0];
     }
