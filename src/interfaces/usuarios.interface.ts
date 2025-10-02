@@ -1,5 +1,6 @@
 export interface UsuarioResponse {
     usuarioId: number;
+    rolId: number;
     rol: string;
     nombreUsuario: string;
     nombre: string;
@@ -26,4 +27,3 @@ export interface ErrorElement {
     path:     string;
     location: string;
 }
-
