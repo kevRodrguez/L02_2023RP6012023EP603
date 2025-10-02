@@ -15,6 +15,14 @@ const rolIdBodyValidator = (): ValidationChain =>
     .isInt({ min: 1 })
     .withMessage("El rol debe ser un número entero positivo");
 
+const rolIdParamValidator = (): ValidationChain =>
+  param("rolId")
+    .trim()
+    .notEmpty()
+    .withMessage("El rol es obligatorio")
+    .isInt({ min: 1 })
+    .withMessage("El rol debe ser un número entero positivo");
+
 const nombreUsuarioBodyValidator = (): ValidationChain =>
   body("nombreUsuario")
     .trim()
@@ -38,8 +46,24 @@ const nombreBodyValidator = (): ValidationChain =>
     .isLength({ max: 100 })
     .withMessage("El nombre no puede exceder los 100 caracteres");
 
+const nombreParamValidator = (): ValidationChain =>
+  param("nombre")
+    .trim()
+    .notEmpty()
+    .withMessage("El nombre es obligatorio")
+    .isLength({ max: 100 })
+    .withMessage("El nombre no puede exceder los 100 caracteres");
+
 const apellidoBodyValidator = (): ValidationChain =>
   body("apellido")
+    .trim()
+    .notEmpty()
+    .withMessage("El apellido es obligatorio")
+    .isLength({ max: 100 })
+    .withMessage("El apellido no puede exceder los 100 caracteres");
+
+const apellidoParamValidator = (): ValidationChain =>
+  param("apellido")
     .trim()
     .notEmpty()
     .withMessage("El apellido es obligatorio")
@@ -66,3 +90,9 @@ export const updateUsuarioValidators: ValidationChain[] = [
 export const deleteUsuarioValidators: ValidationChain[] = [idParamValidator()];
 
 export const getUsuarioByIdValidators: ValidationChain[] = [idParamValidator()];
+
+export const getUsuariosByNombreValidators: ValidationChain[] = [nombreParamValidator()];
+
+export const getUsuariosByApellidoValidators: ValidationChain[] = [apellidoParamValidator()];
+
+export const getUsuariosByRolIdValidators: ValidationChain[] = [rolIdParamValidator()];

@@ -28,6 +28,36 @@ export class UsuarioController {
         }
     }
 
+    public getUsuariosByNombre = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { nombre } = req.params;
+            const usuariosData = await usuarioService.getUsuariosByNombre(nombre);
+            res.status(200).json(usuariosData);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public getUsuariosByApellido = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { apellido } = req.params;
+            const usuariosData = await usuarioService.getUsuariosByApellido(apellido);
+            res.status(200).json(usuariosData);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public getUsuariosByRolId = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { rolId } = req.params;
+            const usuariosData = await usuarioService.getUsuariosByRolId(rolId);
+            res.status(200).json(usuariosData);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     public postUsuario = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const usuarioData: UsuarioRequest = req.body;
