@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { ComentariosService } from "../services/comentarios.service";
 import { ComentarioRequest } from "../../interfaces/comentarios.interface";
 
-
 const comentariosService = new ComentariosService();
 
 export class ComentariosController {
@@ -23,6 +22,26 @@ export class ComentariosController {
             const { id } = req.params;
             const comentarioData = await comentariosService.getComentarioById(id);
             res.status(200).json(comentarioData);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public getComentariosByPublicacionId = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { publicacionId } = req.params;
+            const comentariosData = await comentariosService.getComentariosByPublicacionId(publicacionId);
+            res.status(200).json(comentariosData);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    public getComentariosByUsuarioId = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { usuarioId } = req.params;
+            const comentariosData = await comentariosService.getComentariosByUsuarioId(usuarioId);
+            res.status(200).json(comentariosData);
         } catch (error) {
             return next(error);
         }
@@ -62,71 +81,4 @@ export class ComentariosController {
             return next(error);
         }
     }
-
-    // public getLibrosByAnioPublicacion = async (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-    //         const { anio } = req.params;
-    //         const libros = await libroService.getLibroByAnioPublicacion(anio);
-    //         if (libros.length === 0) {
-    //             res.status(404).json({
-    //                 message: 'No se encontraron libros para el año proporcionado'
-    //             })
-    //             return;
-
-    //         }
-    //         res.status(200).json(libros);
-    //     } catch (error) {
-    //         return next(error);
-    //     }
-    // }
-
-    // public getLibrosByCategoriaId = async (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-    //         const { categoria_id } = req.params;
-    //         const libros = await libroService.getLibroByCategoria(categoria_id);
-    //         if (libros.length === 0) {
-    //             res.status(404).json({
-    //                 message: 'No se encontraron libros para la categoría proporcionada'
-    //             })
-    //             return;
-    //         }
-    //         res.status(200).json(libros);
-    //     } catch (error) {
-    //         return next(error);
-    //     }
-    // }
-
-    // public getLibrosByAutorId = async (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-    //         const { autor_id } = req.params;
-    //         const libros = await libroService.getLibroByAutor(autor_id);
-    //         if (libros.length === 0) {
-    //             res.status(404).json({
-    //                 message: 'No se encontraron libros para el autor proporcionado'
-    //             });
-    //             return;
-    //         }
-    //         res.status(200).json(libros);
-    //     } catch (error) {
-    //         return next(error);
-    //     }
-    // }
-
-    // public getLibrosByClasificacion = async (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-    //         const { clasificacion } = req.body;
-    //         const libros = await libroService.getLibroByClasificacion(clasificacion);
-
-    //         if (libros.length === 0) {
-    //             res.status(404).json({
-    //                 message: 'No se encontraron libros para la clasificación proporcionada'
-    //             });
-    //             return;
-    //         }
-    //         res.status(200).json(libros);
-    //     } catch (error) {
-    //         return next(error);
-    //     }
-    // }
-
 }
