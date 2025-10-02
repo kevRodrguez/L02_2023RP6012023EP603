@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLibroValidators, deleteLibroValidators, getLibroByAnioPublicacionValidators, getLibroByAutorValidators, getLibroByCategoriaValidators, getLibroByClasificacionValidators, getLibroByIdValidators, updateLibroValidators } from "../../middlewares/publicaciones.validator";
+// import { createLibroValidators, deleteLibroValidators, getLibroByAnioPublicacionValidators, getLibroByAutorValidators, getLibroByCategoriaValidators, getLibroByClasificacionValidators, getLibroByIdValidators, updateLibroValidators } from "../../middlewares/publicaciones.validator";
 import { runValidations } from "../../middlewares/validator";
 import { ComentariosController } from "./comentariosController";
 
@@ -17,10 +17,10 @@ export class ComentariosRoutes {
         // router.get('/by-clasificacion', runValidations(getLibroByClasificacionValidators), comentariosController.getLibrosByClasificacion);
 
         // CRUD básico (rutas genéricas van AL FINAL)
-        router.get('/:id', runValidations(getLibroByIdValidators), comentariosController.getComentarioById);
-        router.post('/', runValidations(createLibroValidators), comentariosController.postComentario);
-        router.put('/:id', runValidations(updateLibroValidators), comentariosController.putComentario);
-        router.delete('/:id', runValidations(deleteLibroValidators), comentariosController.deleteComentario);
+        // router.get('/:id', runValidations(getLibroByIdValidators), comentariosController.getComentarioById);
+        // router.post('/', runValidations(createLibroValidators), comentariosController.postComentario);
+        // router.put('/:id', runValidations(updateLibroValidators), comentariosController.putComentario);
+        // router.delete('/:id', runValidations(deleteLibroValidators), comentariosController.deleteComentario);
         return router;
 
         return router;
