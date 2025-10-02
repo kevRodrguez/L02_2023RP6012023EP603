@@ -35,11 +35,15 @@ export class PublicacionesController {
 
     public async putPublicacion(req: Request, res: Response, next: any) {
         const { id_publicacion } = req.params;
-        const { titulo, contenido } = req.body;
+        const { titulo, descripcion, id_usuario } = req.body;
         try {
-            const publicacionActualizada = await publicacionesService.putPublicacion(id_publicacion, titulo, contenido);
+            const publicacionActualizada = await publicacionesService.putPublicacion(
+                id_publicacion,
+                titulo,
+                descripcion,
+                Number(id_usuario)
+            );
             res.status(200).json(publicacionActualizada);
-
         } catch (error) {
             return next(error);
         }

@@ -26,10 +26,10 @@ export class PublicacionesService {
         return publicacionCreada.rows[0];
     }
 
-    public async putPublicacion(id_publicacion: string, titulo: string, contenido: string) {
+    public async putPublicacion(id_publicacion: string, titulo: string, descripcion: string, id_usuario: number) {
         await this.getPublicacionById(id_publicacion);
-        const query = "UPDATE publicaciones SET titulo=$1, contenido=$2 WHERE id_publicacion=$3 RETURNING *";
-        const publicacionActualizada = await pool.query(query, [titulo, contenido, id_publicacion]);
+        const query = "UPDATE publicaciones SET titulo=$1, descripcion=$2, usuarioId=$3 WHERE publicacionId=$4 RETURNING *";
+        const publicacionActualizada = await pool.query(query, [titulo, descripcion, id_usuario, id_publicacion]);
         return publicacionActualizada.rows[0];
     }
 
