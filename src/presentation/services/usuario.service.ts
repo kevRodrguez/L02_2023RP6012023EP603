@@ -2,7 +2,7 @@ import { pool } from "../../db";
 
 import { Error, UsuarioRequest, UsuarioResponse } from "../../interfaces/usuarios.interface";
 import bcrypt from 'bcrypt';
-import { UsuarioRequest, UsuarioResponse } from "../../interfaces/usuarios.interface";
+
 
 
 export class UsuarioService {
@@ -119,7 +119,7 @@ export class UsuarioService {
         }
     }
 
-        const claveHasheada = bcrypt.hashSync(clave, this.salt);
+
     public async getUsuariosByRolId(rolId: string): Promise<UsuarioResponse[]> {
 
         try {
@@ -141,7 +141,7 @@ export class UsuarioService {
             if (result.rowCount === 0) {
                 throw new Error(`Usuario con rol ${rolId} no encontrado`);
             }
-            
+
             return result.rows;
         } catch (error) {
             console.error('Error al obtener usuarios por rol:', error);
@@ -155,6 +155,8 @@ export class UsuarioService {
     public async postUsuario(usuarioData: UsuarioRequest): Promise<UsuarioResponse> {
         const { rolId, nombreUsuario, clave, nombre, apellido } = usuarioData;
 
+
+        const claveHasheada = bcrypt.hashSync(clave, this.salt);
         try {
             const insertResult = await pool.query<{ usuarioid: number }>(
                 `INSERT INTO usuarios (rolid, nombreusuario, clave, nombre, apellido)
