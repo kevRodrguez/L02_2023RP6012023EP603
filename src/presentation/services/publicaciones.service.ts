@@ -27,7 +27,25 @@ export class PublicacionesService {
             throw new CustomError(`Publicaciones con id de usuario ${id_usuario} no encontradas`, 404);
         }
 
-        return result.rows;
+        return {
+            message: `Publicaciones del usuario con id ${id_usuario} encontradas exitosamente!`,
+            publicaciones: result.rows
+        };
+
+    }
+
+
+    public async getPublicacionesconMasComentarios(limite: number) {
+        const result = await pool.query('SELECT p.publicacionid,titulo, COUNT(*) as total_comentarios FROM publicaciones p JOIN comentarios c ON c.publicacionid= p.publicacionid GROUP BY p.publicacionid,titulo, descripcion ORDER BY total_comentarios DESC LIMIT $1', [limite]);
+
+        if (result.rowCount === 0) {
+            throw new CustomError(`Publicaciones no encontradas`, 404);
+        }
+
+        return {
+            message: `Publicaciones con más comentarios encontradas exitosamente!`,
+            publicaciones: result.rows
+        };
 
     }
 

@@ -1,7 +1,13 @@
 import { pool } from "../../db";
+
+import { Error, UsuarioRequest, UsuarioResponse } from "../../interfaces/usuarios.interface";
+import bcrypt from 'bcrypt';
 import { UsuarioRequest, UsuarioResponse } from "../../interfaces/usuarios.interface";
 
+
 export class UsuarioService {
+    private saltRounds = 19;
+    private salt = bcrypt.genSaltSync(this.saltRounds);
     public async getAllUsuarios(): Promise<UsuarioResponse[]> {
         try {
             const result = await pool.query<UsuarioResponse>(
@@ -113,7 +119,9 @@ export class UsuarioService {
         }
     }
 
+        const claveHasheada = bcrypt.hashSync(clave, this.salt);
     public async getUsuariosByRolId(rolId: string): Promise<UsuarioResponse[]> {
+
         try {
             const result = await pool.query<UsuarioResponse>(
                 `SELECT 
@@ -150,16 +158,15 @@ export class UsuarioService {
         try {
             const insertResult = await pool.query<{ usuarioid: number }>(
                 `INSERT INTO usuarios (rolid, nombreusuario, clave, nombre, apellido)
-                 VALUES ($1, $2, $3, $4, $5)
-                 RETURNING usuarioid`,
-                [
-                    rolId,
-                    nombreUsuario,
-                    clave,
-                    nombre,
-                    apellido,
-                ]
-            );
+                VALUES ($1, $2, $3, $4, $5)
+                RETURNING usuarioid`, [
+                rolId,
+                nombreUsuario,
+                claveHasheada,
+                nombre,
+                apellido,
+            ]);
+
 
             const newUsuarioId = insertResult.rows[0].usuarioid;
             return await this.getUsuarioById(String(newUsuarioId));
@@ -175,6 +182,10 @@ export class UsuarioService {
     public async putUsuario(usuarioData: UsuarioRequest, id: string): Promise<UsuarioResponse> {
         const { rolId, nombreUsuario, clave, nombre, apellido } = usuarioData;
 
+
+
+
+        const claveHasheada = bcrypt.hashSync(clave, this.salt);
         try {
             const updateResult = await pool.query<{ usuarioid: number }>(
                 `UPDATE usuarios
@@ -184,17 +195,15 @@ export class UsuarioService {
                     clave = $3,
                     nombre = $4,
                     apellido = $5
-                 WHERE usuarioid = $6
-                 RETURNING usuarioid`,
-                [
-                    rolId,
-                    nombreUsuario,
-                    clave,
-                    nombre,
-                    apellido,
-                    id,
-                ]
-            );
+                                    WHERE usuarioid = $6
+                RETURNING usuarioid`, [
+                rolId,
+                nombreUsuario,
+                claveHasheada,
+                nombre,
+                apellido,
+                id,
+            ]);
 
             if (updateResult.rowCount === 0) {
                 throw new Error(`Usuario con id ${id} no encontrado`);
