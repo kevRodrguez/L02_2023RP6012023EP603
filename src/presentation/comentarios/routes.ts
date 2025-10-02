@@ -1,5 +1,12 @@
 import { Router } from "express";
-// import { createLibroValidators, deleteLibroValidators, getLibroByAnioPublicacionValidators, getLibroByAutorValidators, getLibroByCategoriaValidators, getLibroByClasificacionValidators, getLibroByIdValidators, updateLibroValidators } from "../../middlewares/publicaciones.validator";
+import {
+    createComentarioValidators,
+    deleteComentarioValidators,
+    getComentarioByIdValidators,
+    getComentariosByPublicacionIdValidators,
+    getComentariosByUsuarioIdValidators,
+    updateComentarioValidators,
+} from "../../middlewares/comentarios.validator";
 import { runValidations } from "../../middlewares/validator";
 import { ComentariosController } from "./comentariosController";
 
@@ -8,21 +15,18 @@ export class ComentariosRoutes {
         const router = Router();
         const comentariosController = new ComentariosController();
 
+        // consultas específicas
+        router.get('/publicacion/:publicacionId', runValidations(getComentariosByPublicacionIdValidators), comentariosController.getComentariosByPublicacionId);
+        router.get('/usuario/:usuarioId', runValidations(getComentariosByUsuarioIdValidators), comentariosController.getComentariosByUsuarioId);
+
+        // CRUD básico
         router.get('/', comentariosController.getAllComentarios);
-
-        // consultas especificas (DEBEN IR ANTES que /:id)
-        // router.get('/by-anio-publicacion/:anio', runValidations(getLibroByAnioPublicacionValidators), comentariosController.getLibrosByAnioPublicacion);
-        // router.get('/by-categoria/:categoria_id', runValidations(getLibroByCategoriaValidators), comentariosController.getLibrosByCategoriaId);
-        // router.get('/by-autor/:autor_id', runValidations(getLibroByAutorValidators), validateAutorExistsForSearch, comentariosController.getLibrosByAutorId);
-        // router.get('/by-clasificacion', runValidations(getLibroByClasificacionValidators), comentariosController.getLibrosByClasificacion);
-
-        // CRUD básico (rutas genéricas van AL FINAL)
-        // router.get('/:id', runValidations(getLibroByIdValidators), comentariosController.getComentarioById);
-        // router.post('/', runValidations(createLibroValidators), comentariosController.postComentario);
-        // router.put('/:id', runValidations(updateLibroValidators), comentariosController.putComentario);
-        // router.delete('/:id', runValidations(deleteLibroValidators), comentariosController.deleteComentario);
-        return router;
+        router.get('/:id', runValidations(getComentarioByIdValidators), comentariosController.getComentarioById);
+        router.post('/', runValidations(createComentarioValidators), comentariosController.postComentario);
+        router.put('/:id', runValidations(updateComentarioValidators), comentariosController.putComentario);
+        router.delete('/:id', runValidations(deleteComentarioValidators), comentariosController.deleteComentario);
 
         return router;
     }
 }
+
