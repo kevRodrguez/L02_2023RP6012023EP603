@@ -27,7 +27,7 @@ export const postPublicacionValidators: ValidationChain[] = [
 ];
 
 export const putPublicacionValidators: ValidationChain[] = [
-    body('id_publicacion')
+    param('id_publicacion')
         .isNumeric()
         .withMessage('El ID de la publicación debe ser un número válido'),
     body('titulo')
@@ -40,3 +40,13 @@ export const putPublicacionValidators: ValidationChain[] = [
         .isNumeric()
         .withMessage('El ID de usuario debe ser un número válido')
 ];
+
+
+export const deletePublicacionValidators: ValidationChain[] = [
+    param('id_publicacion')
+        .trim()
+        .notEmpty()
+        .withMessage('El ID de la publicación es obligatorio')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido')
+]
