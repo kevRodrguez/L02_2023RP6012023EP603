@@ -27,7 +27,10 @@ export class PublicacionesService {
             throw new CustomError(`Publicaciones con id de usuario ${id_usuario} no encontradas`, 404);
         }
 
-        return result.rows;
+        return {
+            message: `Publicaciones del usuario con id ${id_usuario} encontradas exitosamente!`,
+            publicaciones: result.rows
+        };
 
     }
 
