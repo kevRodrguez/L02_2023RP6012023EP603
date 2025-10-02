@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { runValidations } from "../../middlewares/validator";
 import { PublicacionesController } from "./publicacionesController";
-import { deletePublicacionValidators, getPublicacionByIdValidators, getPublicacionesByIdUsuarioValidators, postPublicacionValidators, putPublicacionValidators } from "../../middlewares/publicaciones.validator";
+import { deletePublicacionValidators, getPublicacionByIdValidators, getPublicacionesByIdUsuarioValidators, getPublicacionesConMasComentariosValidators, postPublicacionValidators, putPublicacionValidators } from "../../middlewares/publicaciones.validator";
 
 export class publicacionesRoutes {
     static get routes() {
@@ -17,6 +17,8 @@ export class publicacionesRoutes {
 
         //consultas especificas
         router.get('/by-usuario/:id_usuario', runValidations(getPublicacionesByIdUsuarioValidators), publicacionesController.getPublicacionesByIdUsuario);
+
+        router.get('/con-mas-comentarios/:limite', runValidations(getPublicacionesConMasComentariosValidators), publicacionesController.getPublicacionesconMasComentarios);
         return router;
     }
 }

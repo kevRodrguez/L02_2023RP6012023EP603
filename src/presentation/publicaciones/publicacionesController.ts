@@ -32,6 +32,16 @@ export class PublicacionesController {
             return next(error);
         }
     }
+
+    public async getPublicacionesconMasComentarios(req: Request, res: Response, next: any) {
+        const { limite } = req.params;
+        try {
+            const publicaciones = await publicacionesService.getPublicacionesconMasComentarios(Number(limite));
+            res.status(200).json(publicaciones);
+        } catch (error) {
+            return next(error);
+        }
+    }
     public async postPublicacion(req: Request, res: Response, next: any) {
         const { titulo, descripcion, id_usuario } = req.body;
         try {

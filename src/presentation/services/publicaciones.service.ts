@@ -34,6 +34,21 @@ export class PublicacionesService {
 
     }
 
+
+    public async getPublicacionesconMasComentarios(limite: number) {
+        const result = await pool.query('SELECT p.publicacionid,titulo, descripcion, COUNT(*) as total_comentarios FROM publicaciones p JOIN comentarios c ON c.publicacionid= p.publicacionid GROUP BY p.publicacionid,titulo, descripcion ORDER BY total_comentarios DESC LIMIT $1', [limite]);
+
+        if (result.rowCount === 0) {
+            throw new CustomError(`Publicaciones no encontradas`, 404);
+        }
+
+        return {
+            message: `Publicaciones con más comentarios encontradas exitosamente!`,
+            publicaciones: result.rows
+        };
+
+    }
+
     public async postPublicacion(titulo: string, descripcion: string, id_usuario: number) {
         const query = "INSERT INTO publicaciones (titulo, descripcion, usuarioId) VALUES ($1, $2, $3) RETURNING *";
         const publicacionCreada = await pool.query(query, [titulo, descripcion, id_usuario]);

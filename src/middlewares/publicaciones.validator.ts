@@ -62,3 +62,14 @@ export const getPublicacionesByIdUsuarioValidators: ValidationChain[] = [
         .isNumeric()
         .withMessage('El ID de la publicación debe ser un número válido')
 ]
+
+//Consultas especificas
+export const getPublicacionesConMasComentariosValidators: ValidationChain[] = [
+    param('limite')
+        .trim()
+        .notEmpty()
+        .withMessage('El límite es obligatorio')
+        .isNumeric()
+        .withMessage('El límite debe ser un número válido')
+]
+
