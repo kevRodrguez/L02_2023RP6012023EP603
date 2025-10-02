@@ -1,122 +1,64 @@
 import { body, param, ValidationChain } from "express-validator";
 
-// Validaciones para libros
-export const createLibroValidators: ValidationChain[] = [
+
+
+//validaciones para publicaciones
+
+
+//CRUD
+export const getPublicacionByIdValidators: ValidationChain[] = [
+    param('id_publicacion')
+        .trim()
+        .notEmpty()
+        .withMessage('El ID de la publicación es obligatorio')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido')
+]
+
+
+export const postPublicacionValidators: ValidationChain[] = [
     body('titulo')
         .trim()
-        .notEmpty()
-        .withMessage('El título es obligatorio')
-        .isLength({ min: 10, max: 255 })
-        .withMessage('El título debe tener entre 10 y 255 caracteres'),
-    body('anio_publicacion')
-        .notEmpty()
-        .withMessage('El año de publicación es obligatorio')
-        .isInt({ min: 1900 })
-        .withMessage('El año de publicación debe ser un número entero mayor a 1900'),
-    body('autor_id')
+        .notEmpty().withMessage('El título es obligatorio'),
+    body('descripcion')
         .trim()
-        .notEmpty()
-        .withMessage('El ID del autor es obligatorio')
-        .isUUID()
-        .withMessage('El ID del autor debe ser un UUID válido'),
-    body('categoria_id')
-        .trim()
-        .notEmpty()
-        .withMessage('El ID de la categoría es obligatorio')
-        .isUUID()
-        .withMessage('El ID de la categoría debe ser un UUID válido'),
-    body('resumen')
-        .optional()
-        .trim()
-        .isLength({ max: 2000 })
-        .withMessage('El resumen no puede tener más de 2000 caracteres')
+        .notEmpty().withMessage('La descripción es obligatoria'),
+    body('id_usuario')
+        .isNumeric()
+        .withMessage('El ID de usuario debe ser un número válido')
 ];
 
-export const updateLibroValidators: ValidationChain[] = [
-    param('id')
-        .trim()
-        .notEmpty()
-        .withMessage('El ID del libro es obligatorio')
-        .isUUID()
-        .withMessage('El ID debe ser un UUID válido'),
+export const putPublicacionValidators: ValidationChain[] = [
+    param('id_publicacion')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido'),
     body('titulo')
         .trim()
-        .notEmpty()
-        .withMessage('El título es obligatorio')
-        .isLength({ min: 10, max: 255 })
-        .withMessage('El título debe tener entre 10 y 255 caracteres'),
-    body('anio_publicacion')
-        .notEmpty()
-        .withMessage('El año de publicación es obligatorio')
-        .isInt({ min: 1900 })
-        .withMessage('El año de publicación debe ser un número entero mayor a 1900'),
-    body('autor_id')
+        .notEmpty().withMessage('El título es obligatorio'),
+    body('descripcion')
         .trim()
-        .notEmpty()
-        .withMessage('El ID del autor es obligatorio')
-        .isUUID()
-        .withMessage('El ID del autor debe ser un UUID válido'),
-    body('categoria_id')
-        .trim()
-        .notEmpty()
-        .withMessage('El ID de la categoría es obligatorio')
-        .isUUID()
-        .withMessage('El ID de la categoría debe ser un UUID válido'),
-    body('resumen')
-        .optional()
-        .trim()
-        .isLength({ max: 2000 })
-        .withMessage('El resumen no puede tener más de 2000 caracteres')
+        .notEmpty().withMessage('La descripción es obligatoria'),
+    body('id_usuario')
+        .isNumeric()
+        .withMessage('El ID de usuario debe ser un número válido')
 ];
 
-export const deleteLibroValidators: ValidationChain[] = [
-    param('id')
+
+export const deletePublicacionValidators: ValidationChain[] = [
+    param('id_publicacion')
         .trim()
         .notEmpty()
-        .withMessage('El ID del libro es obligatorio')
-        .isUUID()
-        .withMessage('El ID debe ser un UUID válido')
-];
+        .withMessage('El ID de la publicación es obligatorio')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido')
+]
 
-export const getLibroByIdValidators: ValidationChain[] = [
-    param('id')
+//Consultas especificas
+export const getPublicacionesByIdUsuarioValidators: ValidationChain[] = [
+    param('id_usuario')
         .trim()
         .notEmpty()
-        .withMessage('El ID del libro es obligatorio')
-        .isUUID()
-        .withMessage('El ID debe ser un UUID válido')
-];
-
-export const getLibroByAnioPublicacionValidators: ValidationChain[] = [
-    param('anio')
-        .trim()
-        .notEmpty()
-        .withMessage('El año de publicación es obligatorio')
-        .isInt()
-        .withMessage('El año de publicación debe ser un número entero válido mayor a 1900')
-];
-
-export const getLibroByCategoriaValidators: ValidationChain[] = [
-    param('categoria_id')
-        .trim()
-        .notEmpty()
-        .withMessage('El ID de la categoría es obligatorio')
-        .isUUID()
-        .withMessage('El ID de la categoría debe ser un UUID válido')
-];
-
-export const getLibroByAutorValidators: ValidationChain[] = [
-    param('autor_id')
-        .trim()
-        .notEmpty()
-        .withMessage('El ID del autor es obligatorio')
-        .isUUID()
-        .withMessage('El ID del autor debe ser un UUID válido')
-];
-
-export const getLibroByClasificacionValidators: ValidationChain[] = [
-    body('clasificacion')
-        .notEmpty()
-        .withMessage('La clasificación es obligatoria')
-];
-
+        .withMessage('El ID de la publicación es obligatorio')
+        .isNumeric()
+        .withMessage('El ID de la publicación debe ser un número válido')
+]
